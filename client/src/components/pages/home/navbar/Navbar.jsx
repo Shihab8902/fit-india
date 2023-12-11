@@ -9,7 +9,6 @@ const Navbar = () => {
             <div className="flex">
                 <li><NavLink to="/">Home</NavLink></li>
                 <li><NavLink to="/shop">Shop</NavLink></li>
-                <li><NavLink to="/man">Man</NavLink></li>
                 <li><NavLink to="/aboutus">About Us</NavLink></li>
             </div>
             <div className="flex pl-12 items-center">
@@ -24,7 +23,7 @@ const Navbar = () => {
 
     return (
         <div>
-            <div className="navbar container px-10 mx-auto bg-[#444852]">
+            <div className="navbar container px-12 mx-auto bg-[#444852]">
                 <div className="">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -35,7 +34,7 @@ const Navbar = () => {
                         </ul>
                     </div>
                     <div className="">
-                        <img className="w-[110px] rounded-full h-[50px]" src="https://i.ibb.co/B6Ms54X/image-887.png" alt="" />
+                        <img className="w-[62px] rounded-full h-[50px]" src="https://i.ibb.co/B6Ms54X/image-887.png" alt="" />
                     </div>
                 </div>
                 <div className="navbar-center hidden lg:flex">
@@ -44,8 +43,8 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end gap-3">
-                <div className="bg-white p-4 rounded-full"><FaCartArrowDown /></div>
-                <div className="bg-white p-4 rounded-full"><FaCartArrowDown /></div>
+                    <div className="bg-white p-4 rounded-full"><FaCartArrowDown /></div>
+                    <div className="bg-white p-4 rounded-full"><FaCartArrowDown /></div>
                     <img className="w-[50px] rounded-full " src="https://i.ibb.co/GCgqhRT/e8e64141f4c0ae39c32f9701ccea9a2e.jpg" alt="" />
                 </div>
             </div>
