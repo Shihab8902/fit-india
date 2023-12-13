@@ -1,165 +1,92 @@
 import { GoHeart } from "react-icons/go";
 import { FiShoppingCart } from "react-icons/fi";
 import TshirtTitle from "./TshirtTitle";
+import useGetPublic from "../../../../hooks/useGetPublic";
+import ReactStars from "react-rating-stars-component";
+import star from "../../../../assets/icons/Star.svg";
+import { useNavigate } from "react-router-dom";
 
 
 const TshirtCart = () => {
+
+    const navigate = useNavigate();
+    const { data: mostRecent } = useGetPublic(["recentProducts"], `/api/newProducts`);
+
+
+
+
+
+
     return (
-        <div>
-            <div className="bg-[#f6f6f6d0] mt-10">
-                <TshirtTitle></TshirtTitle>
-                <div className="flex gap-14 px-12">
-                    <div className=" pb-12">
-                        <div className="bg-[#FAFAFA] rounded-lg border-2 border-gray-300 w-[252px] pt-4 pl-4 pb-4">
-                            <div className="flex gap-28">
-                                <div>
-                                    <div className="w-12 h-12 rounded-full bg-red-600">
-                                        <h1 className="pt-2 text-white pl-2">-32$</h1>
+
+        <div className="bg-[#f6f6f6d0] mt-10">
+            <TshirtTitle></TshirtTitle>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
+                {
+                    mostRecent?.length > 0 ?
+
+                        mostRecent.map(product => {
+
+                            const { _id, name, images, customerReview, regularPrice, discountedPrice } = product;
+
+                            const totalReview = customerReview?.reduce((acc, review) => review.rating + acc, 0);
+                            const averageReview = Math.floor(totalReview / customerReview.length);
+                            const priceDiff = ((regularPrice - discountedPrice) / regularPrice) * 100;
+                            const discountedPercentage = Math.floor((priceDiff * 100) / 100);
+
+
+                            return <div key={_id} className=" pb-12">
+                                <div >
+                                    <div className=" relative bg-[#E8E8E8] rounded-lg">
+                                        <div className="absolute left-0 top-0 flex justify-between items-center w-full px-5 pt-5 overflow-hidden ">
+                                            {
+                                                discountedPercentage > 0 && <div style={{ backgroundImage: `url(${star})` }} className=" w-16 h-16 flex justify-center items-center bg-cover">
+                                                    <span className=" text-white font-semibold">-{discountedPercentage}%</span>
+                                                </div>
+                                            }
+
+                                            <div className="w-12 h-12 pt-3 pl-3 rounded-full bg-gray-200 bg-opacity-40">
+                                                <button>
+                                                    <GoHeart className="text-2xl text-black" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <img className="w-full h-64 rounded-lg" src={images?.[0]} alt="" />
                                     </div>
+
                                 </div>
                                 <div>
-                                    <div className="w-12 h-12 pt-3 pl-3 rounded-full bg-white">
-                                        <GoHeart className="text-2xl text-black" />
+                                    <div>
+                                        <h1 className="text-xl text-[#25282e] font-medium  py-2">{name}</h1>
+                                        <div >
+                                            {customerReview.length > 0 ? <div className="flex items-center mb-4">
+
+                                                <ReactStars
+                                                    count={5}
+                                                    edit={false}
+                                                    value={averageReview}
+                                                    size={24}
+                                                    activeColor="#F49F00"
+                                                /> <span>({customerReview.length})</span>
+                                            </div> : <p className="text-sm text-gray-400 font-medium mb-6 mt-2">Not reviewed yet</p>}
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <h2 className="pb-4 font-bold">${discountedPrice}</h2>
+                                            <h2 className="pb-4 text-gray-400 line-through">${regularPrice}</h2>
+                                        </div>
+                                        <button onClick={() => navigate(`/product/${_id}`)} className="border-2 flex items-center gap-3 py-3 px-16 rounded-xl hover:bg-[#444852] hover:text-white font-medium text-gray-600 w-full"><FiShoppingCart />View Product</button>
                                     </div>
                                 </div>
                             </div>
-                            <img className="pl-12" src="https://i.ibb.co/HpnGw11/cart.png" alt="" />
-                        </div>
-                        <div>
-                            <div>
-                                <h1 className="text-xl w-[230px] font-bold py-2">Gold Standard Whey Protein</h1>
-                                <div className=" pb-3 flex gap-3">
-                                    <div className="rating">
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                    </div>
-                                    <p>(350)</p>
-                                </div>
-                                <div className="flex gap-2">
-                                    <h2 className="pb-4 font-bold">$2,236</h2>
-                                    <h2 className="pb-4 text-gray-400">$2,236</h2>
-                                </div>
-                                <button className="border-2 flex items-center gap-3 py-2 px-16 rounded-xl hover:bg-[#0242E8] hover:text-white font-medium text-gray-600"><FiShoppingCart />Add to cart</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className=" pb-12">
-                        <div className="bg-[#FAFAFA] rounded-lg border-2 border-gray-300 w-[252px] pt-4 pl-4 pb-4">
-                            <div className="flex gap-28">
-                                <div>
-                                    <div className="w-12 h-12 rounded-full bg-red-600">
-                                        <h1 className="pt-2 text-white pl-2">-32$</h1>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div className="w-12 h-12 pt-3 pl-3 rounded-full bg-white">
-                                        <GoHeart className="text-2xl text-black" />
-                                    </div>
-                                </div>
-                            </div>
-                            <img className="pl-12" src="https://i.ibb.co/HpnGw11/cart.png" alt="" />
-                        </div>
-                        <div>
-                            <div>
-                                <h1 className="text-xl w-[230px] font-bold py-2">Gold Standard Whey Protein</h1>
-                                <div className=" pb-3 flex gap-3">
-                                    <div className="rating">
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                    </div>
-                                    <p>(350)</p>
-                                </div>
-                                <div className="flex gap-2">
-                                    <h2 className="pb-4">$2,236</h2>
-                                    <h2 className="pb-4">$2,236</h2>
-                                </div>
-                                <button className="border-2 flex items-center gap-3 py-2 px-16 rounded-xl font-medium text-gray-600"><FiShoppingCart />Add to cart</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className=" pb-12">
-                        <div className="bg-[#FAFAFA] rounded-lg border-2 border-gray-300 w-[252px] pt-4 pl-4 pb-4">
-                            <div className="flex gap-28">
-                                <div>
-                                    <div className="w-12 h-12 rounded-full bg-red-600">
-                                        <h1 className="pt-2 text-white pl-2">-32$</h1>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div className="w-12 h-12 pt-3 pl-3 rounded-full bg-white">
-                                        <GoHeart className="text-2xl text-black" />
-                                    </div>
-                                </div>
-                            </div>
-                            <img className="pl-12" src="https://i.ibb.co/HpnGw11/cart.png" alt="" />
-                        </div>
-                        <div>
-                            <div>
-                                <h1 className="text-xl w-[230px] font-bold py-2">Gold Standard Whey Protein</h1>
-                                <div className=" pb-3 flex gap-3">
-                                    <div className="rating">
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                    </div>
-                                    <p>(350)</p>
-                                </div>
-                                <div className="flex gap-2">
-                                    <h2 className="pb-4">$2,236</h2>
-                                    <h2 className="pb-4">$2,236</h2>
-                                </div>
-                                <button className="border-2 flex items-center gap-3 py-2 px-16 rounded-xl font-medium text-gray-600"><FiShoppingCart />Add to cart</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className=" pb-12">
-                        <div className="bg-[#FAFAFA] rounded-lg border-2 border-gray-300 w-[252px] pt-4 pl-4 pb-4">
-                            <div className="flex gap-28">
-                                <div>
-                                    <div className="w-12 h-12 rounded-full bg-red-600">
-                                        <h1 className="pt-2 text-white pl-2">-32$</h1>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div className="w-12 h-12 pt-3 pl-3 rounded-full bg-white">
-                                        <GoHeart className="text-2xl text-black" />
-                                    </div>
-                                </div>
-                            </div>
-                            <img className="pl-12" src="https://i.ibb.co/HpnGw11/cart.png" alt="" />
-                        </div>
-                        <div>
-                            <div>
-                                <h1 className="text-xl w-[230px] font-bold py-2">Gold Standard Whey Protein</h1>
-                                <div className=" pb-3 flex gap-3">
-                                    <div className="rating">
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                                    </div>
-                                    <p>(350)</p>
-                                </div>
-                                <div className="flex gap-2">
-                                    <h2 className="pb-4">$2,236</h2>
-                                    <h2 className="pb-4">$2,236</h2>
-                                </div>
-                                <button className="border-2 flex items-center gap-3 py-2 px-16 rounded-xl font-medium text-gray-600"><FiShoppingCart />Add to cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        })
+
+
+                        : ''
+                }
+
             </div>
         </div>
+
     );
 };
 

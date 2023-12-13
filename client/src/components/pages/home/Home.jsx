@@ -11,16 +11,16 @@ import TshirtCart from "./t-shirt cart/TshirtCart";
 
 const Home = () => {
     return (
-        <div>
-            <FirstSection></FirstSection>
+        <div className="container mx-auto">
+            {/* <FirstSection></FirstSection> */}
             <Category></Category>
-            <ShoesCart></ShoesCart>
-            <Shop3Items></Shop3Items>
             <TshirtCart></TshirtCart>
+            <Shop3Items></Shop3Items>
+            <ShoesCart></ShoesCart>
             <Shop5items></Shop5items>
             <ShirtCart></ShirtCart>
             <Discount></Discount>
-            <Review></Review>
+            {/* <Review></Review> */}
         </div>
     );
 };

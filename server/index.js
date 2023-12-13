@@ -2,11 +2,21 @@ const express = require("express");
 const globalErrorHandler = require("./src/util/globalErrorHanlder");
 const connectDB = require("./src/util/db/connectDB");
 const app = express();
+const cors = require("cors");
 const port = process.env.PORT || 9000;
+
+
+
+//Middlewares
+app.use(cors());
+app.use(express.json());
+
+
 
 
 //Routes
 const productRoutes = require('./src/routes/productRoutes');
+
 
 
 

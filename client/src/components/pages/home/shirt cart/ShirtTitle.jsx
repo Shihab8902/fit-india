@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 const ShirtTitle = () => {
     return (
         <div>
-            <div className="px-12 pb-10 pt-14 flex justify-between">
-                <h1 className="text-[28px] font-bold">Shirt for you</h1>
-                <Link to="/shop"><button className="bg-[#FAFAFA] py-2 hover:bg-blue-600 hover:text-white px-6 rounded-full border-2 border-[#E7E7E8] flex items-center gap-3">View All<SlArrowRight />
+            <div className="px-4 pb-10 pt-14 flex justify-between items-center">
+                <h1 className="text-xl md:text-[28px] font-bold">Best Selling Items</h1>
+                <Link to="/shop"><button className="text-xs md:text-base bg-[#FAFAFA] py-2 hover:bg-blue-600 hover:text-white px-3 md:px-6 rounded-full border-2 border-[#E7E7E8] flex items-center gap-3">View All<SlArrowRight />
                 </button></Link>
             </div>
         </div>

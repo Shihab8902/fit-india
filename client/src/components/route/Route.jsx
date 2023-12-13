@@ -6,7 +6,7 @@ import Footer from "../pages/home/footer/Footer";
 const Route = () => {
     return (
         <div>
-            <Navbar></Navbar>
+            {/* <Navbar></Navbar> */}
             <Outlet></Outlet>
             <Footer></Footer>
         </div>

@@ -3,10 +3,10 @@
 const Review = () => {
     return (
         <div className="px-14">
-            <div className="hero w-[300px] pt-24 justify-start py-8" style={{ backgroundImage: 'url(https://i.ibb.co/xqfCDSH/Ellipse-1478.png)' }}>
+            <div className="hero w-[300px]  justify-start py-8" style={{ backgroundImage: 'url(https://i.ibb.co/xqfCDSH/Ellipse-1478.png)' }}>
                 <h4 className="text-3xl -mt-8 w-[300px]"> Testimonials<img src="https://i.ibb.co/zmcN3gR/Vector-2599.png" alt="" /></h4>
             </div>
-                <h1 className="text-5xl -mt-8 font-bold">See what cour customers say about Us</h1>
+            <h1 className="text-5xl -mt-8 font-bold">See what cour customers say about Us</h1>
             <div>
                 <div>
                     <div className="carousel w-full">

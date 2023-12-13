@@ -17,10 +17,6 @@ const productSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
-    averageRating: {
-        type: Number,
-        default: 0
-    },
     discountedPrice: {
         type: Number,
         required: true
@@ -36,7 +32,7 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    customerReviews: {
+    customerReview: {
         type: Array,
         default: []
     },
