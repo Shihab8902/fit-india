@@ -1,6 +1,7 @@
+import Carousel from "./carousel/Carousel";
 import Category from "./category/Category";
 import Discount from "./discount/Discount";
-import FirstSection from "./first-section/FirstSection";
+
 import Review from "./review/Review";
 import ShirtCart from "./shirt cart/ShirtCart";
 import ShoesCart from "./shoesCart/ShoesCart";
@@ -12,7 +13,7 @@ import TshirtCart from "./t-shirt cart/TshirtCart";
 const Home = () => {
     return (
         <div className="container mx-auto">
-            {/* <FirstSection></FirstSection> */}
+            <Carousel />
             <Category></Category>
             <TshirtCart></TshirtCart>
             <Shop3Items></Shop3Items>

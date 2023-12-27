@@ -1,0 +1,11 @@
+.nav-link .active {
+    background-color: transparent !important;
+    color: white !important;
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+    .nav-link .active {
+        color: black !important;
+    }
+}

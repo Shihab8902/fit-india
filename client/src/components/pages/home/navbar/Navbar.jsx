@@ -1,57 +1,85 @@
-import { NavLink } from "react-router-dom";
-import { FaCartArrowDown } from "react-icons/fa";
-import { FaRegHeart } from "react-icons/fa";
+import { Link, NavLink } from 'react-router-dom';
+import Logo from '../../../Shared/Logo/Logo';
 
+import './navbar.css';
+import Search from './search/Search';
+import User from './user/User';
 
 const Navbar = () => {
 
-    const navlinks = <>
-        <div className=" gap-8 items-center flex">
-            <div className="flex">
-                <li><NavLink to="/">Home</NavLink></li>
-                <li ><NavLink to="/shop">Shop</NavLink></li>
-                <li><NavLink to="/aboutus">About Us</NavLink></li>
+
+    const navLinks = <>
+
+
+        <li className='nav-link font-semibold lg:text-white'><NavLink to="/">Home</NavLink></li>
+        <li className='lg:text-white font-semibold'>
+            <div className="dropdown dropdown-bottom">
+                <div tabIndex={0} role="button" >Shop</div>
+                <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-orange-600 rounded-box w-52">
+                    <li><a>Item 1</a></li>
+                    <li><a>Item 2</a></li>
+                </ul>
             </div>
-            <div className="flex pl-56 items-center">
-                <input type="text" placeholder="search here" className=" text-white p-2 border-2 bg-[#ffffff31] border-white rounded-md" />
-                <div className="flex">
-                    <li><NavLink to="/signin">Sign In</NavLink></li>
-                    <li><NavLink to="/signup">Sign Up</NavLink></li>
-                </div>
-            </div>
-        </div>
+        </li>
+
+        <li className='lg:text-white font-semibold nav-link'><NavLink to="/aboutus">About Us</NavLink></li>
+
+
+
+
     </>
 
+
+
     return (
-        <div>
-            <div className="navbar container px-12 mx-auto bg-[#444852]">
-                <div className="">
-                    <div className="dropdown">
-                        <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+        <div className="drawer">
+            <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content flex flex-col">
+                {/* Navbar */}
+                <div className="w-full navbar bg-orange-600 justify-between px-5">
+                    <div>
+                        <div className="flex-none lg:hidden">
+                            <label htmlFor="my-drawer-3" aria-label="open sidebar" className="btn btn-square  text-white btn-ghost">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                            </label>
                         </div>
-                        <ul tabIndex={0} className="menu pl-6 menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                            {navlinks}
-                        </ul>
+                        <div className="flex px-2 mx-2 py-2"><Link><Logo /></Link></div>
+                        <div className="flex-none hidden lg:block">
+                            <ul className="menu menu-horizontal">
+                                {navLinks}
+
+                            </ul>
+                        </div>
                     </div>
-                    <div className="flex w-[168px] items-center gap-3">
-                        <img className="w-[50px] rounded-full h-[50px]" src="https://i.ibb.co/B6Ms54X/image-887.png" alt="" />
-                        <h1 className="text-white font-bold">Online Shop</h1>
+
+                    <div className='hidden lg:flex items-center  gap-10'>
+                        <div >
+                            <Search />
+                        </div>
+
+                        <div>
+                            <User />
+                        </div>
                     </div>
                 </div>
-                <div className="navbar-center hidden lg:flex">
-                    <ul className="menu text-white pl-6 menu-horizontal px-1">
-                        {navlinks}
-                    </ul>
-                </div>
-                <div className="navbar-end gap-3">
-                    <div className="bg-white p-4 rounded-full"><FaRegHeart /></div>
-                    <div className="bg-white p-4 rounded-full"><FaCartArrowDown /></div>
-                    <img className="w-[50px] rounded-full " src="https://i.ibb.co/GCgqhRT/e8e64141f4c0ae39c32f9701ccea9a2e.jpg" alt="" />
-                </div>
+
+            </div>
+            <div className="drawer-side z-20">
+                <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
+                <ul className="menu p-4 w-80 min-h-full bg-base-200">
+                    <div className='flex justify-end mb-6'>
+                        <User />
+                    </div>
+                    <div className='mb-6'>
+                        <Search />
+                    </div>
+                    {navLinks}
+
+                </ul>
+
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Navbar;
+export default Navbar
