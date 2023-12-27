@@ -1,31 +1,38 @@
 import { GoHeart } from "react-icons/go";
 import { FiShoppingCart } from "react-icons/fi";
-import TshirtTitle from "./TshirtTitle";
-import useGetPublic from "../../../../hooks/useGetPublic";
+import ShoesTitle from "./ShoesTitle";
 import ReactStars from "react-rating-stars-component";
-import star from "../../../../assets/icons/Star.svg";
+
+import star from '../../../assets/icons/Star.svg';
 import { useNavigate } from "react-router-dom";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from "react";
+import useGetPublic from "../../../hooks/useGetPublic";
 
 
-const TshirtCart = () => {
-
+const ShoesCart = () => {
     const navigate = useNavigate();
-    const { data: mostRecent } = useGetPublic(["recentProducts"], `/api/newProducts`);
+    const { data: topRated } = useGetPublic(['topProducts'], `/api/topRated`);
 
 
-
-
+    //Initiate AOS
+    useEffect(() => {
+        AOS.init({
+            duration: 1000
+        })
+    }, [])
 
 
     return (
 
         <div className="bg-[#f6f6f6d0] mt-10">
-            <TshirtTitle></TshirtTitle>
+            <ShoesTitle></ShoesTitle>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
                 {
-                    mostRecent?.length > 0 ?
+                    topRated?.length > 0 ?
 
-                        mostRecent.map(product => {
+                        topRated.map(product => {
 
                             const { _id, name, images, customerReview, regularPrice, discountedPrice } = product;
 
@@ -35,7 +42,7 @@ const TshirtCart = () => {
                             const discountedPercentage = Math.floor((priceDiff * 100) / 100);
 
 
-                            return <div key={_id} className=" pb-12">
+                            return <div data-aos="fade-up" key={_id} className=" pb-12">
                                 <div >
                                     <div className=" relative bg-[#E8E8E8] rounded-lg">
                                         <div className="absolute left-0 top-0 flex justify-between items-center w-full px-5 pt-5 overflow-hidden ">
@@ -80,7 +87,6 @@ const TshirtCart = () => {
                             </div>
                         })
 
-
                         : ''
                 }
 
@@ -90,4 +96,4 @@ const TshirtCart = () => {
     );
 };
 
-export default TshirtCart;
+export default ShoesCart;

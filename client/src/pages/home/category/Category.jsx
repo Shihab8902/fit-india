@@ -1,8 +1,8 @@
 
-import shoes from '../../../../assets/images/shoes.png';
-import tshirt from '../../../../assets/images/tshirt.png';
-import shirt from '../../../../assets/images/shirt.png';
-import pant from '../../../../assets/images/pant.png';
+import shoes from '../../../assets/images/shoes.png';
+import tshirt from '../../../assets/images/tshirt.png';
+import shirt from '../../../assets/images/shirt.png';
+import pant from '../../../assets/images/pant.png';
 import { useNavigate } from 'react-router-dom';
 
 const Category = () => {

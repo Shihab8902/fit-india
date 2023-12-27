@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../pages/home/navbar/Navbar";
-import Footer from "../pages/home/footer/Footer";
+import Navbar from "../components/Shared/navbar/Navbar";
+import Footer from "../components/Shared/footer/Footer";
 
 
-const Route = () => {
+
+const Root = () => {
     return (
         <div>
             <Navbar></Navbar>
@@ -13,4 +14,4 @@ const Route = () => {
     );
 };
 
-export default Route;
+export default Root;

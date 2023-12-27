@@ -1,10 +1,11 @@
 import { GoHeart } from "react-icons/go";
 import { Link, useLoaderData, useNavigate } from "react-router-dom"
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FiShoppingCart } from "react-icons/fi";
-import useGetPublic from "../../../../hooks/useGetPublic";
+
 import ReactStars from "react-rating-stars-component";
 import ShirtTitle from "../shirt cart/ShirtTitle";
+import useGetPublic from "../../../hooks/useGetPublic";
 
 
 

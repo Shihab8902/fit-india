@@ -1,10 +1,23 @@
 import { Link } from "react-router-dom";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from "react";
 
 
 const Shop5items = () => {
+
+    //Initiate AOS
+    useEffect(() => {
+        AOS.init({
+            duration: 1000
+        })
+    }, [])
+
+
+
     return (
         <div className="px-5 w-full mt-24 grid  lg:grid-cols-4 gap-5  ">
-            <div className="lg:col-span-3">
+            <div data-aos="fade-right" className="lg:col-span-3">
                 <div className="grid md:grid-cols-3 pb-5 gap-5">
                     <div className="text-center md:col-span-2 rounded-[12px] w-full bg-center bg-no-repeat bg-cover" style={{ backgroundImage: 'url(https://i.ibb.co/zfJccd1/Rectangle-34624333.png)' }}>
                         <Link to="/shop">
@@ -43,7 +56,7 @@ const Shop5items = () => {
                 </div>
             </div>
 
-            <div className="hidden lg:block">
+            <div data-aos="zoom-in" className="hidden lg:block">
                 <div className="text-center rounded-xl w-full h-full bg-center bg-cover bg-no-repeat" style={{ backgroundImage: 'url(https://i.ibb.co/hWjvyh8/Rectangle-34624335.png)' }}>
                     <Link to="/shop">
                         <div className="w-full h-full flex flex-col items-center justify-center">

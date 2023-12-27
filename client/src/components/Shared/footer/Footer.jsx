@@ -1,3 +1,4 @@
+import Logo from "../Logo/Logo";
 
 
 const Footer = () => {
@@ -5,8 +6,7 @@ const Footer = () => {
         <div>
             <footer className="footer text-white container mx-auto p-10 bg-[#444852] ">
                 <aside className="flex items-center gap-4">
-                    <img src="https://i.ibb.co/TW4Kc9K/image-887.png" alt="" />
-                    <p className="text-2xl">Online Shop</p>
+                    <Logo />
                 </aside>
                 <nav>
                     <header className="text-xl font-medium pb-4">Our Service</header>
@@ -17,10 +17,10 @@ const Footer = () => {
                 <nav>
                     <header className="text-xl font-medium pb-4">Contact us</header>
                     <a className="link link-hover">(+88) 1234 567887</a>
-                    <a className="link link-hover">onlineShoping@gmail.ocm</a>
+                    <a className="link link-hover">shop@online.com</a>
                 </nav>
                 <nav>
-                    <header className="text-xl font-medium pb-4">social</header>
+                    <header className="text-xl font-medium pb-4">Social</header>
                     <a className="link link-hover">Facebook</a>
                     <a className="link link-hover">You Tube</a>
                 </nav>

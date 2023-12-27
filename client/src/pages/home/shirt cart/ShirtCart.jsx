@@ -2,16 +2,26 @@ import { GoHeart } from "react-icons/go";
 
 import ReactStars from "react-rating-stars-component";
 import ShirtTitle from "./ShirtTitle";
-import useGetPublic from "../../../../hooks/useGetPublic";
-import star from '../../../../assets/icons/Star.svg';
+
+import star from '../../../assets/icons/Star.svg';
 import { FiShoppingCart } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from "react";
+import useGetPublic from "../../../hooks/useGetPublic";
 
 
 const ShirtCart = () => {
     const navigate = useNavigate();
     const { data: bestSelling } = useGetPublic(["bestSellingProducts"], `/api/bestSelling`);
 
+    //Initiate AOS
+    useEffect(() => {
+        AOS.init({
+            duration: 1000
+        })
+    }, [])
 
 
 
@@ -33,7 +43,7 @@ const ShirtCart = () => {
                         const discountedPercentage = Math.floor((priceDiff * 100) / 100);
 
 
-                        return <div key={_id} className=" pb-12">
+                        return <div data-aos="fade-up" key={_id} className=" pb-12">
                             <div >
                                 <div className=" relative bg-[#E8E8E8] rounded-lg">
                                     <div className="absolute left-0 top-0 flex justify-between items-center w-full px-5 pt-5 overflow-hidden ">
