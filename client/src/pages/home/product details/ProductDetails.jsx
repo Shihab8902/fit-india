@@ -3,19 +3,20 @@ import Slider from "./slider/Slider";
 import ReactStars from "react-rating-stars-component";
 import { useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
+import Reviews from "./reviews/Reviews";
 
 
 const ProductDetails = () => {
     const product = useLoaderData().data;
 
-    const { _id, name, description, customerReview, discountedPrice, regularPrice, sizes } = product;
+    const { _id, name, description, customerReviews, discountedPrice, regularPrice, sizes } = product;
 
     const [selectedSize, setSelectedSize] = useState(sizes?.[0]);
     const [selectedQuantity, setSelectedQuantity] = useState(1);
 
 
-    const totalReview = customerReview?.reduce((acc, review) => review.rating + acc, 0);
-    const averageReview = Math.floor(totalReview / customerReview.length);
+    const totalReview = customerReviews?.reduce((acc, review) => review.rating + acc, 0);
+    const averageReview = Math.floor(totalReview / customerReviews.length);
 
 
 
@@ -42,7 +43,7 @@ const ProductDetails = () => {
 
 
                 <div >
-                    {customerReview.length > 0 ? <div className="flex items-center mb-4">
+                    {customerReviews.length > 0 ? <div className="flex items-center mb-4">
 
                         <ReactStars
                             count={5}
@@ -50,7 +51,7 @@ const ProductDetails = () => {
                             value={averageReview}
                             size={24}
                             activeColor="#F49F00"
-                        /> <span>({customerReview.length})</span>
+                        /> <span>({customerReviews.length})</span>
                     </div> : <p className="text-sm text-gray-400 font-medium mb-6 mt-2">Not reviewed yet</p>}
                 </div>
 
@@ -92,7 +93,11 @@ const ProductDetails = () => {
         </div>
 
         {/* Reviews */}
-
+        {
+            customerReviews && <div className=" my-32">
+                <Reviews key={product._id} product={product} />
+            </div>
+        }
 
 
 

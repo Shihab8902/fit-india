@@ -34,10 +34,10 @@ const ShoesCart = () => {
 
                         topRated.map(product => {
 
-                            const { _id, name, images, customerReview, regularPrice, discountedPrice } = product;
+                            const { _id, name, images, customerReviews, regularPrice, discountedPrice } = product;
 
-                            const totalReview = customerReview?.reduce((acc, review) => review.rating + acc, 0);
-                            const averageReview = Math.floor(totalReview / customerReview.length);
+                            const totalReview = customerReviews?.reduce((acc, review) => review.rating + acc, 0);
+                            const averageReview = Math.floor(totalReview / customerReviews.length);
                             const priceDiff = ((regularPrice - discountedPrice) / regularPrice) * 100;
                             const discountedPercentage = Math.floor((priceDiff * 100) / 100);
 
@@ -66,7 +66,7 @@ const ShoesCart = () => {
                                     <div>
                                         <h1 className="text-xl text-[#25282e] font-medium  py-2">{name}</h1>
                                         <div >
-                                            {customerReview.length > 0 ? <div className="flex items-center mb-4">
+                                            {customerReviews.length > 0 ? <div className="flex items-center mb-4">
 
                                                 <ReactStars
                                                     count={5}
@@ -74,7 +74,7 @@ const ShoesCart = () => {
                                                     value={averageReview}
                                                     size={24}
                                                     activeColor="#F49F00"
-                                                /> <span>({customerReview.length})</span>
+                                                /> <span>({customerReviews.length})</span>
                                             </div> : <p className="text-sm text-gray-400 font-medium mb-6 mt-2">Not reviewed yet</p>}
                                         </div>
                                         <div className="flex gap-2">

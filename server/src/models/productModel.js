@@ -32,7 +32,7 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    customerReview: {
+    customerReviews: {
         type: Array,
         default: []
     },
