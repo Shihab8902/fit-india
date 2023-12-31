@@ -7,14 +7,14 @@ const Reviews = ({ product }) => {
     //Pagination
     const [currentPage, setCurrentPage] = useState(0);
     const itemPerPage = 5;
-    const totalItem = customerReviews.length;
+    const totalItem = customerReviews?.length;
 
     const numberOfPages = Math.ceil(totalItem / itemPerPage);
 
     const pages = [...Array(numberOfPages).keys()];
     const skip = currentPage * itemPerPage;
 
-    const currentReviews = customerReviews.slice(skip, skip + itemPerPage);
+    const currentReviews = customerReviews?.slice(skip, skip + itemPerPage);
 
 
 
@@ -28,7 +28,7 @@ const Reviews = ({ product }) => {
         <div className=' mt-16'>
             {
                 currentReviews?.map(review => {
-                    return <div key={review.reviewAt} className='border-b mb-5 pb-8 border-[#D8D8DA] grid grid-cols-5 items-center'>
+                    return <div key={review.reviewAt} className='border-b mb-5 pb-8 border-[#D8D8DA] grid md:grid-cols-5 items-center'>
                         <div>
                             <p className='text-lg font-medium'>{review?.name}</p>
                             <p className='text-lg font-medium mt-8'>
@@ -44,8 +44,8 @@ const Reviews = ({ product }) => {
                             </p>
                         </div>
 
-                        <div className="col-span-3">
-                            <h3 className="text-2xl font-medium mb-3">{review.name}</h3>
+                        <div className="md:col-span-3">
+                            <h3 className="text-2xl font-medium mb-3">{review.title}</h3>
                             <p className="text-gray-500">{review.description}</p>
                         </div>
 

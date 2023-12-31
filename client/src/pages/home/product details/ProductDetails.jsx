@@ -1,9 +1,11 @@
 import { useLoaderData } from "react-router-dom"
 import Slider from "./slider/Slider";
 import ReactStars from "react-rating-stars-component";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import Reviews from "./reviews/Reviews";
+import Shop5items from "../shopbyoffer/Shop5items";
+import ShirtCart from "../shirt cart/ShirtCart";
 
 
 const ProductDetails = () => {
@@ -18,6 +20,10 @@ const ProductDetails = () => {
     const totalReview = customerReviews?.reduce((acc, review) => review.rating + acc, 0);
     const averageReview = Math.floor(totalReview / customerReviews.length);
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
 
 
 
@@ -26,7 +32,7 @@ const ProductDetails = () => {
     return <div className="container mx-auto px-5 my-10">
 
         {/* Product details */}
-        <div className=" flex gap-6">
+        <div className=" flex gap-6 flex-col lg:flex-row">
 
             <div className="flex-1">
                 <Slider key={_id} product={product} />
@@ -81,7 +87,7 @@ const ProductDetails = () => {
                     </div>
                 </div>
 
-                <div className="mt-6 flex gap-6">
+                <div className="mt-6 flex gap-6 flex-col md:flex-row">
                     <button className="flex items-center gap-2 py-4 px-11 border-[#DFE0E1] hover:text-white hover:bg-[#444852] rounded-lg border text-[#54575C] text-xl font-medium"><FiShoppingCart /> Add To Cart</button>
                     <button className=" py-4 px-[72px] border-[#DFE0E1] bg-[#444852] text-white hover:bg-transparent rounded-lg border hover:text-[#54575C] text-xl font-medium">Buy Now</button>
                 </div>
@@ -98,6 +104,12 @@ const ProductDetails = () => {
                 <Reviews key={product._id} product={product} />
             </div>
         }
+
+        {/* Item grid */}
+        <Shop5items />
+
+        {/* Best selling items */}
+        <ShirtCart />
 
 
 

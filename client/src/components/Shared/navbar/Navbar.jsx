@@ -12,16 +12,8 @@ const Navbar = () => {
 
 
         <li className='nav-link font-semibold lg:text-white'><NavLink to="/">Home</NavLink></li>
-        <li className='lg:text-white font-semibold'>
-            <div className="dropdown dropdown-bottom">
-                <div tabIndex={0} role="button" >Shop</div>
-                <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-orange-600 rounded-box w-52">
-                    <li><a>Item 1</a></li>
-                    <li><a>Item 2</a></li>
-                </ul>
-            </div>
-        </li>
 
+        <li className='nav-link font-semibold lg:text-white'><NavLink to="/shop">Shop</NavLink></li>
         <li className='lg:text-white font-semibold nav-link'><NavLink to="/aboutus">About Us</NavLink></li>
 
 
@@ -32,7 +24,7 @@ const Navbar = () => {
 
 
     return (
-        <div className="drawer container mx-auto">
+        <div className="drawer ">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col">
                 {/* Navbar */}
