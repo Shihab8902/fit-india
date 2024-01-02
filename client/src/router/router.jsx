@@ -18,6 +18,7 @@ import Allusers from "../pages/dahsboard/Allusers";
 import PaymentHistory from "../pages/dahsboard/PaymentHistory";
 import Additems from "../pages/dahsboard/Additems";
 import ManageItems from "../pages/dahsboard/ManageItems";
+import AddDeliveryAddress from "../pages/add-delivery-address/AddDeliveryAddress";
 
 export const router = createBrowserRouter([
     {
@@ -56,10 +57,15 @@ export const router = createBrowserRouter([
                 path: "/product/:id",
                 element: <ProductDetails />,
                 loader: ({ params }) => axios.get(`http://localhost:9000/api/product?id=${params.id}`)
-            }
+            },
+            {
+                path: "/adddeliveryaddress",
+                element: <AddDeliveryAddress></AddDeliveryAddress>
+            },
         ]
     },
 
+    // admin related router
     {
         path: "/dashboard",
         element: <Dashboard></Dashboard>,
