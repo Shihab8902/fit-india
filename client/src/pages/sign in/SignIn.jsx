@@ -2,10 +2,48 @@ import { Link, useNavigate } from "react-router-dom";
 import image from '../../assets/images/logo.png';
 import google from '../../assets/icons/google.png';
 import microsoft from '../../assets/icons/microsoft.png';
+import { useContext, useState } from "react";
+import { UserContext } from "../../context/AuthProvider";
+import Swal from "sweetalert2";
 
 const SignIn = () => {
 
     const navigate = useNavigate();
+
+    const { logInUser } = useContext(UserContext);
+    const [isSignIn, setIsSignIn] = useState(false);
+
+    const handleSubmit = (e) => {
+        setIsSignIn(true);
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+
+        logInUser(email, password)
+            .then(res => {
+                if (res?.user) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        text: "You are successfully signed in!",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        color: "green"
+                    });
+                    navigate("/");
+                    setIsSignIn(false);
+                }
+            })
+            .catch((error) => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: error.message
+                })
+            });
+
+    }
 
 
     return (
@@ -20,24 +58,24 @@ const SignIn = () => {
                 <div className='md:bg-white py-8 md:px-14 rounded-xl '>
                     <h3 className='text-center text-4xl font-medium '>Login to your <br /> account</h3>
                     <div className="divider">Or sign in with email</div>
-                    <form >
+                    <form onSubmit={handleSubmit}>
                         <div className="form-control mt-3">
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
-                            <input type="email" placeholder="Email" className="input input-bordered md:w-80" required />
+                            <input type="email" name="email" placeholder="Email" className="input input-bordered md:w-80" required />
                         </div>
 
                         <div className="form-control mt-3">
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type="password" placeholder="******" className="input input-bordered md:w-80" required />
+                            <input type="password" name="password" placeholder="******" className="input input-bordered md:w-80" required />
 
                         </div>
 
                         <div className="form-control mt-6">
-                            <button className="btn btn-neutral text-white">Sign up</button>
+                            <button disabled={isSignIn} className="btn btn-neutral text-white">Sign in {isSignIn && <span className="loading loading-spinner loading-xs"></span>}</button>
                         </div>
 
                     </form>
