@@ -12,7 +12,7 @@ const Navbar = () => {
         <li className='nav-link font-semibold lg:text-white'><NavLink to="/">Home</NavLink></li>
         <li className='nav-link font-semibold lg:text-white'><NavLink to="/shop">Shop</NavLink></li>
         <li className='lg:text-white font-semibold nav-link'><NavLink to="/aboutus">About Us</NavLink></li>
-        <li className='lg:text-white font-semibold nav-link'><NavLink to="/dashboard">Dashboard</NavLink></li>
+
     </>
 
 

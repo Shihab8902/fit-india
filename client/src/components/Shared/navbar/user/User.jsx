@@ -62,7 +62,7 @@ const User = () => {
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-12 rounded-full object-contain">
-                            <img alt="User" className="object-cover" src="https://i.ibb.co/jyk7NGb/blank-black-white-image-placeholder-icon-design-178700106.jpg" />
+                            <img alt="User" className="object-cover" src={user?.photoURL || "https://i.ibb.co/jyk7NGb/blank-black-white-image-placeholder-icon-design-178700106.jpg"} />
                         </div>
                     </div>
                     <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">

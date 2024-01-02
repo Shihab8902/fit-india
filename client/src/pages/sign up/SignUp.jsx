@@ -51,7 +51,7 @@ const SignUp = () => {
                     //Update user profile with name
                     updateProfile(res?.user, { displayName: name })
                         .then(() => {
-                            const user = { name, email, phone };
+                            const user = { name, email, phone, role: "user" };
                             saveUserToDB(user);  //Save new user info to the database
                             Swal.fire({
                                 position: "center",

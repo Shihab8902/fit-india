@@ -5,12 +5,13 @@ import microsoft from '../../assets/icons/microsoft.png';
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/AuthProvider";
 import Swal from "sweetalert2";
+import saveUserToDB from "../../utils/saveUserToDB";
 
 const SignIn = () => {
 
     const navigate = useNavigate();
 
-    const { logInUser } = useContext(UserContext);
+    const { logInUser, signInWithGoogle, signInWithMicrosoft } = useContext(UserContext);
     const [isSignIn, setIsSignIn] = useState(false);
 
     const handleSubmit = (e) => {
@@ -44,6 +45,80 @@ const SignIn = () => {
             });
 
     }
+
+
+    //Google login
+    const handleGoogleLogin = () => {
+        signInWithGoogle()
+            .then(res => {
+                if (res?.user) {
+                    const user = {
+                        name: res?.user?.displayName,
+                        email: res?.user?.email,
+                        phone: '',
+                        role: "user",
+                    }
+
+                    saveUserToDB(user);
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        text: "You are successfully signed in!",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        color: "green"
+                    });
+                    navigate("/");
+                }
+            })
+            .catch((error) => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: error.message
+                })
+            });
+    }
+
+    //Microsoft login
+    const handleMicrosoftLogin = () => {
+        signInWithMicrosoft()
+            .then(res => {
+                if (res?.user) {
+                    const user = {
+                        name: res?.user?.displayName,
+                        email: res?.user?.email,
+                        phone: '',
+                        role: "user",
+                    }
+
+                    saveUserToDB(user);
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        text: "You are successfully signed in!",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        color: "green"
+                    });
+                    navigate("/");
+                }
+            })
+            .catch((error) => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: error.message
+                })
+            });
+    }
+
+
+
+
+
+
+
 
 
     return (
@@ -82,8 +157,8 @@ const SignIn = () => {
                     <div className="divider divider-default">or</div>
                     <p className="text-lg font-semibold mb-3">Continue with: </p>
                     <div className="flex items-center  gap-4">
-                        <button className="flex items-center gap-2 font-semibold border-2 bg-gray-50 w-1/2 py-2 px-5 rounded-lg"><img className="w-5 h-5" src={google} alt="" />Google</button>
-                        <button className="flex items-center gap-2 font-semibold border-2 bg-gray-50 w-1/2 px-5 py-2 rounded-lg"><img className="w-5 h-5" src={microsoft} alt="" />Microsoft</button>
+                        <button onClick={handleGoogleLogin} className="flex items-center gap-2 font-semibold border-2 bg-gray-50 w-1/2 py-2 px-5 rounded-lg"><img className="w-5 h-5" src={google} alt="" />Google</button>
+                        <button onClick={handleMicrosoftLogin} className="flex items-center gap-2 font-semibold border-2 bg-gray-50 w-1/2 px-5 py-2 rounded-lg"><img className="w-5 h-5" src={microsoft} alt="" />Microsoft</button>
                     </div>
                     <p className='text-center mt-5  text-[#8A9099]'>Don't have an account? <Link to="/signup" className='text-black hover:underline'>Sign up</Link></p>
                 </div>

@@ -1,6 +1,7 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { GoogleAuthProvider, OAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { createContext, useEffect, useState } from "react"
 import auth from "../firebase/firebase.config";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 export const UserContext = createContext(null);
 
@@ -8,6 +9,8 @@ const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const axiosPublic = useAxiosPublic();
 
 
     //Create a user
@@ -29,6 +32,24 @@ const AuthProvider = ({ children }) => {
     }
 
 
+    //Sign in with Google
+    const googleProvider = new GoogleAuthProvider();
+
+    const signInWithGoogle = () => {
+        setLoading(true);
+        return signInWithPopup(auth, googleProvider);
+    }
+
+
+    //Sign in with Microsoft
+    const microsoftProvider = new OAuthProvider('microsoft.com');
+
+    const signInWithMicrosoft = () => {
+        setLoading(true);
+        return signInWithPopup(auth, microsoftProvider);
+    }
+
+
 
 
 
@@ -37,8 +58,19 @@ const AuthProvider = ({ children }) => {
     //User observer
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+            if (currentUser) {
+                axiosPublic.post("/auth/jwt", { user: currentUser?.email })
+                    .then(res => {
+                        localStorage.setItem("access-token", `bearer ${res.data?.token}`);
+                    });
+                setLoading(false);
+            }
+            else {
+                setLoading(true);
+                localStorage.removeItem("access-token");
+            }
             setUser(currentUser);
-            setLoading(false);
+
         });
 
         return () => {
@@ -53,7 +85,9 @@ const AuthProvider = ({ children }) => {
         loading,
         createUser,
         logInUser,
-        logOutUser
+        logOutUser,
+        signInWithGoogle,
+        signInWithMicrosoft
     }
 
     return <UserContext.Provider value={authInfo}>
