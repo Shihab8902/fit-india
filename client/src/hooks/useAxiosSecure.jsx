@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { useContext } from 'react';
 import { UserContext } from '../context/AuthProvider';
-import useNavigate from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+
+
 
 export const axiosSecure = axios.create({
     baseURL: "http://localhost:9000"
@@ -13,7 +15,7 @@ const useAxiosSecure = () => {
     const navigate = useNavigate();
 
     //Request interceptor
-    axios.interceptors.request.use(function (config) {
+    axiosSecure.interceptors.request.use(function (config) {
         const token = localStorage.getItem("access-token");
         config.headers.authentication = token
         return config;
@@ -23,11 +25,14 @@ const useAxiosSecure = () => {
     });
 
     //Response interceptor
-    axios.interceptors.response.use(function (response) {
+    axiosSecure.interceptors.response.use(function (response) {
         return response;
-    }, function () {
-        logOutUser();
-        navigate("/signin")
+    }, function (error) {
+        if (error.response?.status === 401 || error.response?.status === 403) {
+            navigate("/signin");
+            logOutUser();
+        }
+
     });
 
     return axiosSecure;

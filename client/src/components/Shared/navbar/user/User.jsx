@@ -1,14 +1,18 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
 import { FaUserPlus } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../../../../context/AuthProvider";
 import Swal from 'sweetalert2';
+import useCartItems from "../../../../hooks/useCartItems";
 
 const User = () => {
 
     const { user, logOutUser } = useContext(UserContext);
+    const navigate = useNavigate();
+
+    const { cartItems } = useCartItems();
 
 
     const handleSignOut = () => {
@@ -31,6 +35,7 @@ const User = () => {
                             showConfirmButton: false,
                             timer: 1500
                         });
+                        navigate("/");
                     })
 
             }
@@ -52,8 +57,8 @@ const User = () => {
 
 
                 <div className="indicator">
-                    <button className="text-lg bg-gray-200 rounded-full p-4"> <FaCartShopping /></button>
-                    <span className="badge badge-sm indicator-item">0</span>
+                    <button onClick={() => navigate("/cart")} className="text-lg bg-gray-200 rounded-full p-4"> <FaCartShopping /></button>
+                    <span className="badge badge-sm indicator-item">{cartItems?.length || 0}</span>
                 </div>
 
 

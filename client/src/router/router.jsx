@@ -1,7 +1,5 @@
 
 import { createBrowserRouter } from "react-router-dom";
-
-
 import axios from "axios";
 import Root from "../Layouts/Root";
 import Home from "../pages/home/Home";
@@ -19,6 +17,8 @@ import PaymentHistory from "../pages/dahsboard/PaymentHistory";
 import Additems from "../pages/dahsboard/Additems";
 import ManageItems from "../pages/dahsboard/ManageItems";
 import AddDeliveryAddress from "../pages/add-delivery-address/AddDeliveryAddress";
+import Cart from "../pages/cart/Cart";
+import PrivateRoute from "../components/Private Route/PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -57,6 +57,12 @@ export const router = createBrowserRouter([
                 path: "/product/:id",
                 element: <ProductDetails />,
                 loader: ({ params }) => axios.get(`http://localhost:9000/api/product?id=${params.id}`)
+            },
+            {
+                path: "/cart",
+                element: <PrivateRoute>
+                    <Cart />
+                </PrivateRoute>
             },
             {
                 path: "/adddeliveryaddress",

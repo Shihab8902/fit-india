@@ -1,11 +1,15 @@
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData, useNavigate } from "react-router-dom"
 import Slider from "./slider/Slider";
 import ReactStars from "react-rating-stars-component";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import Reviews from "./reviews/Reviews";
 import Shop5items from "../shopbyoffer/Shop5items";
 import ShirtCart from "../shirt cart/ShirtCart";
+import { UserContext } from "../../../context/AuthProvider";
+import Swal from 'sweetalert2';
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useCartItems from "../../../hooks/useCartItems";
 
 
 const ProductDetails = () => {
@@ -16,13 +20,72 @@ const ProductDetails = () => {
     const [selectedSize, setSelectedSize] = useState(sizes?.[0]);
     const [selectedQuantity, setSelectedQuantity] = useState(1);
 
+    const { user } = useContext(UserContext);
+    const navigate = useNavigate();
+    const axiosSecure = useAxiosSecure();
+    const { refetch } = useCartItems();
+
 
     const totalReview = customerReviews?.reduce((acc, review) => review.rating + acc, 0);
     const averageReview = Math.floor(totalReview / customerReviews.length);
 
     useEffect(() => {
         window.scrollTo(0, 0)
-    }, [])
+    }, []);
+
+
+    //Handle product add to cart
+    const handleAddToCart = () => {
+        if (user) {
+            const price = discountedPrice * selectedQuantity;
+            const productDetails = {
+                name,
+                image: product?.images[0],
+                size: selectedSize,
+                quantity: selectedQuantity,
+                price,
+                user: user?.email,
+                totalReview,
+                averageReview
+            }
+
+            axiosSecure.post("/api/cart", productDetails)
+                .then(res => {
+                    if (res.data?.user) {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: `${name} is added to the cart!`,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        navigate("/cart");
+                        refetch();
+
+                    }
+                })
+
+
+        } else {
+            Swal.fire({
+                title: "Unavailable!",
+                text: "Please sign in to your account for adding a cart item.",
+                icon: "error",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sign in"
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    navigate("/signin")
+
+                }
+            });
+        }
+
+
+    }
 
 
 
@@ -88,7 +151,7 @@ const ProductDetails = () => {
                 </div>
 
                 <div className="mt-6 flex gap-6 flex-col md:flex-row">
-                    <button className="flex items-center gap-2 py-4 px-11 border-[#DFE0E1] hover:text-white hover:bg-[#444852] rounded-lg border text-[#54575C] text-xl font-medium"><FiShoppingCart /> Add To Cart</button>
+                    <button onClick={handleAddToCart} className="flex items-center gap-2 py-4 px-11 border-[#DFE0E1] hover:text-white hover:bg-[#444852] rounded-lg border text-[#54575C] text-xl font-medium"><FiShoppingCart /> Add To Cart</button>
                     <button className=" py-4 px-[72px] border-[#DFE0E1] bg-[#444852] text-white hover:bg-transparent rounded-lg border hover:text-[#54575C] text-xl font-medium">Buy Now</button>
                 </div>
 
