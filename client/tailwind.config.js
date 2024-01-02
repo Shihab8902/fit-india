@@ -6,7 +6,11 @@ export default {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      'kaushan': ['"Kaushan Script"']
+    },
   },
+
   plugins: [require("daisyui")],
 }
 

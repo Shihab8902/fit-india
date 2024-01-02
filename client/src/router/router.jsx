@@ -1,21 +1,28 @@
 
-
 import { createBrowserRouter } from "react-router-dom";
-import Route from "../components/route/Route";
-import Home from "../components/pages/home/Home";
-import SignIn from "../components/pages/sign in/SignIn";
-import SignUp from "../components/pages/sign up/SignUp";
-import Shop from "../components/pages/shop/Shop";
-import AboutUs from "../components/pages/about us/AboutUs";
-import Verification from "../components/pages/verification/Verification";
-import Otp from "../components/pages/otp/Otp";
-import ProductDetails from "../components/pages/home/product details/ProductDetails";
+
+
 import axios from "axios";
+import Root from "../Layouts/Root";
+import Home from "../pages/home/Home";
+import SignIn from "../pages/sign in/SignIn";
+import SignUp from "../pages/sign up/SignUp";
+import Shop from "../pages/shop/Shop";
+import AboutUs from "../pages/about us/AboutUs";
+import Verification from "../pages/verification/Verification";
+import Otp from "../pages/otp/Otp";
+import ProductDetails from "../pages/home/product details/ProductDetails";
+import Dashboard from "../pages/dahsboard/Dashboard";
+import AdminHome from "../pages/dahsboard/AdminHome";
+import Allusers from "../pages/dahsboard/Allusers";
+import PaymentHistory from "../pages/dahsboard/PaymentHistory";
+import Additems from "../pages/dahsboard/Additems";
+import ManageItems from "../pages/dahsboard/ManageItems";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <Route></Route>,
+        element: <Root></Root>,
         children: [
             {
                 path: "/",
@@ -52,4 +59,31 @@ export const router = createBrowserRouter([
             }
         ]
     },
+
+    {
+        path: "dashboard",
+        element: <Dashboard></Dashboard>,
+        children: [
+            {
+                path: "adminhome",
+                element: <AdminHome></AdminHome>
+            },
+            {
+                path: "allusers",
+                element: <Allusers></Allusers>
+            },
+            {
+                path: "paymenthhistory",
+                element: <PaymentHistory></PaymentHistory>
+            },
+            {
+                path: "additems",
+                element: <Additems></Additems>
+            },
+            {
+                path: "manageitems",
+                element: <ManageItems></ManageItems>
+            },
+        ]
+    }
 ])
