@@ -7,7 +7,7 @@ import Footer from "../components/Shared/footer/Footer";
 const Root = () => {
 
     const location = useLocation();
-    console.log(location);
+
 
 
     return (

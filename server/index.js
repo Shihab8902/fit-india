@@ -16,7 +16,7 @@ app.use(express.json());
 
 //Routes
 const productRoutes = require('./src/routes/productRoutes');
-
+const userRoutes = require("./src/routes/userRoutes");
 
 
 
@@ -25,6 +25,7 @@ const productRoutes = require('./src/routes/productRoutes');
 
 //Routes use
 app.use(productRoutes);
+app.use(userRoutes);
 
 
 

@@ -59,7 +59,7 @@ const ShirtCart = () => {
                                             </button>
                                         </div>
                                     </div>
-                                    <img className="w-full h-64 rounded-lg" src={images?.[0]} alt="" />
+                                    <img className="w-full h-64 rounded-lg object-cover" src={images?.[0]} alt="" />
                                 </div>
 
                             </div>
