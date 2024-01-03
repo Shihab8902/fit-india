@@ -45,7 +45,7 @@ const ProductDetails = () => {
                 quantity: selectedQuantity,
                 price,
                 user: user?.email,
-                totalReview,
+                totalReviewers: customerReviews?.length,
                 averageReview
             }
 
