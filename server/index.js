@@ -19,6 +19,7 @@ const productRoutes = require('./src/routes/productRoutes');
 const userRoutes = require("./src/routes/userRoutes");
 const authenticationRoutes = require("./src/routes/authentication");
 const cartRoutes = require("./src/routes/cartRoutes");
+const addressRoutes = require("./src/routes/addressRoutes");
 
 
 
@@ -28,6 +29,7 @@ app.use(productRoutes);
 app.use(userRoutes);
 app.use(authenticationRoutes);
 app.use(cartRoutes);
+app.use(addressRoutes);
 
 
 

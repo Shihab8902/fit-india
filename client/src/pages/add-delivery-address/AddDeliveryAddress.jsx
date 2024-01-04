@@ -1,81 +1,114 @@
 import { GoCheck } from "react-icons/go";
 import { GoAlert } from "react-icons/go";
+import { useLocation } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useContext } from "react";
+import { UserContext } from "../../context/AuthProvider";
 
+
+import Swal from 'sweetalert2';
+import useGetSecure from "../../hooks/useGetSecure";
+import AddressCard from "./AddressCard";
 
 const AddDeliveryAddress = () => {
-    return (
-        <div className="pt-14 container mx-auto  px-10 h-screen">
-            <ol class="flex items-center w-full">
-                <li class="flex w-full items-center text-blue-600 dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-blue-800">
-                    <span class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-12 lg:w-12 dark:bg-blue-800 shrink-0">
-                        <svg class="w-3.5 h-3.5 text-blue-600 lg:w-4 lg:h-4 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                        </svg>
-                    </span>
-                </li>
-                <li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-gray-700">
-                    <span class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-                        02
-                    </span>
-                </li>
-                <li class="flex items-center w-full">
-                    <span class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-                        03
-                    </span>
-                </li>
-            </ol>
 
-            {/*  */}
-            <div className="pt-12">
-                <h1 className="text-3xl text-black font-medium"><span className="text-gray-300">02.</span>Delivery Address</h1>
-                <div className="md:flex gap-4">
-                    <div className="border-[1px] mt-4 p-3 rounded-xl bg-[#fff9ed] border-orange-200 w-fit">
-                        <h2 className=" w-fit text-orange-500 bg-orange-100 rounded-xl flex items-center gap-4 font-medium px-3 py-2">Last delivered by this address <GoAlert /></h2>
-                        <h1 className="font-bold py-1 pl-1">Aravindh N</h1>
-                        <p className="text-sm pl-1">No: 2/326, Malayanoor(Vill), Ramagondahalli <br /> (PO), Pennagaram (Tk)</p>
-                        <p className="pt-1 pb-2">Tamil nadu - 636 810</p>
-                        <div className="flex gap-3">
-                            <button className="bg-orange-400 p-0 px-4 text-base text-white rounded-md">Delete</button>
-                            <button className="bg-orange-400 p-0 px-4 text-base text-white rounded-md">Edit</button>
-                        </div>
-                    </div>
-                    <div className="border-[1px] mt-4 p-3 rounded-xl bg-[#ffffff] border-[#dadada] w-fit">
-                        <h1 className="font-bold py-1 pl-1">Aravindh N</h1>
-                        <p className="text-sm pl-1">No: 2/326, Malayanoor(Vill), Ramagondahalli <br /> (PO), Pennagaram (Tk)</p>
-                        <p className="pt-1 pb-2">Tamil nadu - 636 810</p>
-                        <div className="flex gap-3">
-                            <button className="border-[2px] p-0 px-4 text-base text-balance rounded-md">Delete</button>
-                            <button className="border-[2px] p-0 px-4 text-base text-balance rounded-md">Edit</button>
-                        </div>
-                    </div>
-                </div>
+    const location = useLocation();
+
+    const axiosSecure = useAxiosSecure();
+    const { user } = useContext(UserContext);
+
+    const { data: addresses, refetch, isPending } = useGetSecure(["delivery-address", user?.email], `/api/address?email=${user?.email}`);
+
+
+    const handleAddressAdd = (e) => {
+        e.preventDefault();
+        const form = e.target;
+
+        const name = form.name.value;
+        const phone = form.phone.value;
+        const street = form.street.value;
+        const state = form.state.value;
+        const city = form.city.value;
+        const note = form.note.value;
+        const country = form.country.value;
+
+        const deliveryAddress = { name, phone, street, city, state, country, note, email: user?.email };
+
+        axiosSecure.post("/api/address", deliveryAddress)
+            .then(res => {
+                if (res.data) {
+                    form.reset();
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Delivery address added",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    localStorage.setItem("primary-address", JSON.stringify(res.data));
+                    refetch();
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: error.message
+                });
+            });
+
+    }
+
+    return (
+        <div className=" container mx-auto px-5  min-h-screen">
+
+            <div className="flex items-center justify-center my-14">
+                <ul className="steps steps-horizontal ">
+                    <li className="step step-primary "></li>
+                    <li className="step step-primary"></li>
+                    <li className="step"></li>
+
+                </ul>
             </div>
 
+
+
+            {
+                isPending ? <div className="text-center"><span className="loading loading-spinner text-warning"></span></div>
+                    : addresses?.length > 0 ? <div >
+                        <h1 className="text-3xl text-black font-medium"><span className="text-gray-300">02.</span>Delivery Address</h1>
+                        <div className="grid lg:grid-cols-3 gap-6 items-center my-14">
+
+
+
+                            {
+
+                                addresses?.length > 3 ? addresses?.slice(0, 3)?.map(address => <AddressCard key={address?._id} address={address} refetch={refetch} />)
+
+                                    : addresses?.map(address => <AddressCard key={address?._id} address={address} refetch={refetch} />)
+                            }
+
+
+
+                        </div>
+                    </div>
+
+
+                        : ""
+            }
+
+
+
+
+
             {/* Open the modal using document.getElementById('ID').showModal() method */}
-            <div className="text-center pt-8">
-                <button className="btn text-orange-500 hover:bg-orange-500 hover:text-white hover:border-orange-50 bg-white" onClick={() => document.getElementById('my_modal_1').showModal()}>See all address</button>
-                <dialog id="my_modal_1" className="modal">
-                    <div className="bg-white px-16 py-16 rounded-xl">
-                        <div className="md:flex gap-4">
-                            <div className="border-[1px] mt-4 p-3 rounded-xl bg-[#fff9ed] border-orange-200 w-fit">
-                                <h2 className=" w-fit text-orange-500 bg-orange-100 rounded-xl flex items-center gap-4 font-medium px-3 py-2">Last delivered by this address <GoAlert /></h2>
-                                <h1 className="font-bold py-1 pl-1">Aravindh N</h1>
-                                <p className="text-sm pl-1">No: 2/326, Malayanoor(Vill), Ramagondahalli <br /> (PO), Pennagaram (Tk)</p>
-                                <p className="pt-1 pb-2">Tamil nadu - 636 810</p>
-                                <div className="flex gap-3">
-                                    <button className="bg-orange-400 p-0 px-4 text-base text-white rounded-md">Delete</button>
-                                    <button className="bg-orange-400 p-0 px-4 text-base text-white rounded-md">Edit</button>
-                                </div>
-                            </div>
-                            <div className="border-[1px] mt-4 p-3 rounded-xl bg-[#ffffff] border-[#dadada] w-fit">
-                                <h1 className="font-bold py-1 pl-1">Aravindh N</h1>
-                                <p className="text-sm pl-1">No: 2/326, Malayanoor(Vill), Ramagondahalli <br /> (PO), Pennagaram (Tk)</p>
-                                <p className="pt-1 pb-2">Tamil nadu - 636 810</p>
-                                <div className="flex gap-3">
-                                    <button className="border-[2px] p-0 px-4 text-base text-balance rounded-md">Delete</button>
-                                    <button className="border-[2px] p-0 px-4 text-base text-balance rounded-md">Edit</button>
-                                </div>
-                            </div>
+            <div className="text-center ">
+                {addresses?.length > 0 && <button className="btn text-orange-500 hover:bg-orange-500 hover:text-white hover:border-orange-50 bg-white" onClick={() => document.getElementById('my_modal_1').showModal()}>See all address</button>}
+                <dialog id="my_modal_1" className="modal overflow-y-auto">
+                    <div className="bg-white px-16 py-16 rounded-xl ">
+                        <div className="grid lg:grid-cols-2 gap-6 ">
+                            {addresses?.map(address => <AddressCard key={address?._id} address={address} refetch={refetch} />)}
+
                         </div>
                         <div className="modal-action">
                             <form method="dialog">
@@ -88,50 +121,54 @@ const AddDeliveryAddress = () => {
                 </dialog>
             </div>
 
-            {/*  */}
-            <div className="pt-10">
-                <h1 className="text-xl font-bold pb-4">Or New Address</h1>
+
+            <form className="pt-10" onSubmit={handleAddressAdd}>
+                <h1 className="text-xl font-bold mb-6">Add new address</h1>
                 <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                        <h1 className="pb-2">Name</h1>
-                        <input type="text" placeholder="Full Name" className="input input-bordered w-full " />
+                        <label className="pb-2">Name</label>
+                        <input type="text" name="name" placeholder="Full name" className="input mt-2 input-bordered w-full " required />
                     </div>
                     <div>
-                        <h1 className="pb-2">Phone Number</h1>
-                        <input type="number" placeholder="Enter Phone Number" className="input input-bordered w-full " />
+                        <label className="pb-2">Phone Number</label>
+                        <input type="text" name="phone" placeholder="Enter phone number" className="input mt-2 input-bordered w-full " required />
                     </div>
                 </div>
                 <div className="grid pt-6 md:grid-cols-2 gap-4">
                     <div>
-                        <h1 className="pb-2">District</h1>
-                        <input type="text" placeholder="Enter District" className="input input-bordered w-full " />
+                        <label >State</label>
+                        <input type="text" name="state" placeholder="Enter state" className="input mt-2 input-bordered w-full " required />
                     </div>
                     <div>
-                        <h1 className="pb-2">Street</h1>
-                        <input type="number" placeholder="Enter Street address" className="input input-bordered w-full " />
+                        <label >Street</label>
+                        <input type="text" name="street" placeholder="Enter Street address" className="input mt-2 input-bordered w-full " required />
                     </div>
                 </div>
                 <div className="grid pt-6 items-center md:grid-cols-2 gap-4">
                     <div>
-                        <h1 className="pb-2">City</h1>
-                        <input type="location" placeholder="Enter City address" className="input input-bordered w-full " />
+                        <label >City</label>
+                        <input type="text" name="city" placeholder="Enter city" className="input mt-2 input-bordered w-full " required />
                     </div>
                     <div>
-                        <h1 className="pb-2">Select Address Type</h1>
-                        <select className="select select-bordered w-full">
-                            <option disabled selected>Who shot first?</option>
-                            <option>Han Solo</option>
-                            <option>Greedo</option>
-                        </select>
+                        <label >Country</label>
+                        <input type="text" name="country" placeholder="Enter country" className="input mt-2 input-bordered w-full " required />
                     </div>
                 </div>
 
-            </div>
+                <div className="pt-6">
+                    <label className="br" >Additional note</label>
+                    <textarea className="textarea textarea-bordered w-full mt-2 h-32 resize-none" name="note" placeholder="Leave a additional note for identifying your address better"></textarea>
 
-            {/*  */}
-            <div className="text-center pt-8">
-                <button className="bg-orange-400 text-white text-xl font-medium px-36 py-2 rounded-md">Next</button>
-            </div>
+                </div>
+
+                <div className="text-center py-8">
+                    <button type="submit" className="bg-orange-600 text-white rounded-lg btn hover:text-black  py-3">Save Address</button>
+                </div>
+
+            </form>
+
+            <button type="submit" disabled={addresses?.length < 1} className="bg-[#444852] my-10 text-white w-full rounded-lg btn hover:text-black  py-3">Next</button>
+
         </div>
     )
 }

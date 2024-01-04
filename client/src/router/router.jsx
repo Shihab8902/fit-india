@@ -65,7 +65,7 @@ export const router = createBrowserRouter([
                 </PrivateRoute>
             },
             {
-                path: "/adddeliveryaddress",
+                path: "/deliveryAddress",
                 element: <AddDeliveryAddress></AddDeliveryAddress>
             },
         ]

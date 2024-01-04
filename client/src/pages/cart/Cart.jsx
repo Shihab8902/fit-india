@@ -1,14 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import useCartItems from "../../hooks/useCartItems"
 import CartCard from "./CartCard";
 
 const Cart = () => {
-
+    const navigate = useNavigate();
 
     const { cartItems, isPending, refetch } = useCartItems();
 
-    const subtotal = cartItems?.reduce((acc, products) => products.price + acc, 0)
+    const subtotal = cartItems?.reduce((acc, products) => products.price + acc, 0);
 
-    return <div className="min-h-screen container mx-auto px-5">
+    return <div className="min-h-screen container mx-auto px-5 ">
 
         {
             isPending ?
@@ -23,7 +24,6 @@ const Cart = () => {
                         <ul className="steps steps-horizontal ">
                             <li className="step step-primary "></li>
                             <li className="step "></li>
-                            <li className="step"></li>
                             <li className="step"></li>
                         </ul>
                     </div>
@@ -58,7 +58,7 @@ const Cart = () => {
 
 
                     <div className=" w-2/5 mx-auto mt-20">
-                        <button className="bg-[#444852] w-full text-white rounded-lg btn hover:text-black  py-3">Next</button>
+                        <button onClick={() => navigate("/deliveryAddress", { state: { ...cartItems, subtotal } })} className="bg-[#444852] w-full text-white rounded-lg btn hover:text-black  py-3">Next</button>
                     </div>
 
 
