@@ -1,6 +1,6 @@
 import { GoCheck } from "react-icons/go";
 import { GoAlert } from "react-icons/go";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useContext } from "react";
 import { UserContext } from "../../context/AuthProvider";
@@ -13,12 +13,14 @@ import AddressCard from "./AddressCard";
 const AddDeliveryAddress = () => {
 
     const location = useLocation();
+    const products = location?.state;
+    const navigate = useNavigate();
 
     const axiosSecure = useAxiosSecure();
     const { user } = useContext(UserContext);
 
     const { data: addresses, refetch, isPending } = useGetSecure(["delivery-address", user?.email], `/api/address?email=${user?.email}`);
-
+    const selectedAddress = JSON.parse(localStorage.getItem("primary-address")) || {};
 
     const handleAddressAdd = (e) => {
         e.preventDefault();
@@ -167,7 +169,7 @@ const AddDeliveryAddress = () => {
 
             </form>
 
-            <button type="submit" disabled={addresses?.length < 1} className="bg-[#444852] my-10 text-white w-full rounded-lg btn hover:text-black  py-3">Next</button>
+            <button onClick={() => navigate("/payment", { state: [selectedAddress, products] })} disabled={addresses?.length < 1 || !selectedAddress} className="bg-[#444852] my-10 text-white w-full rounded-lg btn hover:text-black  py-3">Next</button>
 
         </div>
     )

@@ -2,11 +2,16 @@
 import Swal from 'sweetalert2';
 import { GoAlert } from "react-icons/go";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AddressCard = ({ address, refetch }) => {
 
+    const navigate = useNavigate();
+
     const { name, street, state, city, country, phone, note, _id } = address;
     const primaryAddress = JSON.parse(localStorage.getItem("primary-address")) || {};
+
 
     const isMatch = address._id === primaryAddress?._id || false;
 
@@ -19,6 +24,15 @@ const AddressCard = ({ address, refetch }) => {
         window.location.reload();
         scrollTo(0, 0);
     }
+
+
+    //Handle address edit
+    const handleAddressEdit = data => {
+        navigate("/deliveryAddress/edit", { state: data });
+    }
+
+
+
 
 
     //Handle address delete
@@ -36,6 +50,9 @@ const AddressCard = ({ address, refetch }) => {
                 axiosSecure.delete(`/api/address?id=${id}`)
                     .then(res => {
                         if (res?.data?.deletedCount > 0) {
+                            if (primaryAddress?._id === id) {
+                                localStorage.removeItem("primary-address");
+                            }
                             refetch();
                             Swal.fire({
                                 position: "center",
@@ -74,9 +91,19 @@ const AddressCard = ({ address, refetch }) => {
                     handleAddressDelete(_id);
 
                 }} className={`border-[2px] ${isMatch ? "bg-orange-500 text-white" : "bg-white text-black"} p-0 px-4 rounded-md`}>Delete</button>
-                <button className={`border-[2px] ${isMatch ? "bg-orange-500 text-white" : "bg-white text-black"} p-0 px-4  rounded-md`}>Edit</button>
+                <button onClick={(e) => {
+                    e.stopPropagation();
+                    handleAddressEdit({ name, street, state, city, country, phone, note, _id });
+                }}
+                    className={`border-[2px] ${isMatch ? "bg-orange-500 text-white" : "bg-white text-black"} p-0 px-4  rounded-md`}>Edit</button>
             </div>
-        </div>
+
+
+
+
+
+
+        </div >
     )
 }
 

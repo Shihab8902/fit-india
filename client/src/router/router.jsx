@@ -19,6 +19,8 @@ import ManageItems from "../pages/dahsboard/ManageItems";
 import AddDeliveryAddress from "../pages/add-delivery-address/AddDeliveryAddress";
 import Cart from "../pages/cart/Cart";
 import PrivateRoute from "../components/Private Route/PrivateRoute";
+import EditAddress from "../pages/add-delivery-address/EditAddress";
+import PaymentForm from "../pages/payment/PaymentForm";
 
 export const router = createBrowserRouter([
     {
@@ -66,8 +68,20 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/deliveryAddress",
-                element: <AddDeliveryAddress></AddDeliveryAddress>
+                element: <PrivateRoute>
+                    <AddDeliveryAddress />
+                </PrivateRoute>
             },
+            {
+                path: "/deliveryAddress/edit",
+                element: <EditAddress />
+            },
+            {
+                path: "/payment",
+                element: <PrivateRoute>
+                    <PaymentForm />
+                </PrivateRoute>
+            }
         ]
     },
 
