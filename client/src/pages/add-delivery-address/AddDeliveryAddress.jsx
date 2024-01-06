@@ -169,7 +169,7 @@ const AddDeliveryAddress = () => {
 
             </form>
 
-            <button onClick={() => navigate("/payment", { state: [selectedAddress, products] })} disabled={addresses?.length < 1 || !selectedAddress} className="bg-[#444852] my-10 text-white w-full rounded-lg btn hover:text-black  py-3">Next</button>
+            <button onClick={() => navigate("/payment", { state: { selectedAddress, ...products } })} disabled={addresses?.length < 1 || !selectedAddress} className="bg-[#444852] my-10 text-white w-full rounded-lg btn hover:text-black  py-3">Next</button>
 
         </div>
     )

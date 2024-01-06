@@ -15,7 +15,7 @@ import useCartItems from "../../../hooks/useCartItems";
 const ProductDetails = () => {
     const product = useLoaderData().data;
 
-    const { _id, name, description, customerReviews, discountedPrice, regularPrice, sizes } = product;
+    const { _id, name, description, customerReviews, discountedPrice, regularPrice, sizes, soldQuantity } = product;
 
     const [selectedSize, setSelectedSize] = useState(sizes?.[0]);
     const [selectedQuantity, setSelectedQuantity] = useState(1);
@@ -44,6 +44,8 @@ const ProductDetails = () => {
                 size: selectedSize,
                 quantity: selectedQuantity,
                 price,
+                soldQuantity,
+                productId: _id,
                 user: user?.email,
                 totalReviewers: customerReviews?.length,
                 averageReview

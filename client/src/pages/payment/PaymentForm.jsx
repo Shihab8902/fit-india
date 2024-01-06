@@ -1,14 +1,40 @@
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const PaymentForm = () => {
 
     const location = useLocation();
     const deliveryInfo = location.state;
-    const productPrice = deliveryInfo?.[1]?.subtotal;
+    console.log(deliveryInfo);
+    const productPrice = deliveryInfo?.totalPrice;
+
     const shippingFee = productPrice * 0.05;
 
+    const axiosSecure = useAxiosSecure();
+
+
     const handlePayment = () => {
+        const deliveryDetails = {
+            name: deliveryInfo?.selectedAddress?.name,
+            phone: deliveryInfo?.selectedAddress?.phone,
+            products: deliveryInfo?.products,
+            street: deliveryInfo?.selectedAddress?.street,
+            state: deliveryInfo?.selectedAddress?.state,
+            city: deliveryInfo?.selectedAddress?.city,
+            country: deliveryInfo?.selectedAddress?.country,
+            email: deliveryInfo?.selectedAddress?.email,
+            subtotal: productPrice
+        }
+
+
+        axiosSecure.post("/api/sslInit", deliveryDetails)
+            .then(res => {
+                if (res?.data?.url) {
+                    window.location.replace(res?.data?.url);
+
+                }
+            })
 
     }
 

@@ -37,7 +37,7 @@ const Cart = () => {
 
                     <div className=" mt-14">
                         {
-                            cartItems?.map(product => <CartCard key={product?.Id} product={product} refetch={refetch} />)
+                            cartItems?.map(product => <CartCard key={product?._id} product={product} refetch={refetch} />)
                         }
                     </div>
 
@@ -58,7 +58,7 @@ const Cart = () => {
 
 
                     <div className=" w-2/5 mx-auto mt-20">
-                        <button onClick={() => navigate("/deliveryAddress", { state: { ...cartItems, subtotal } })} className="bg-[#444852] w-full text-white rounded-lg btn hover:text-black  py-3">Next</button>
+                        <button onClick={() => navigate("/deliveryAddress", { state: { products: cartItems, totalPrice: subtotal } })} className="bg-[#444852] w-full text-white rounded-lg btn hover:text-black  py-3">Next</button>
                     </div>
 
 
