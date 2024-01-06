@@ -9,6 +9,9 @@ const Cart = () => {
 
     const subtotal = cartItems?.reduce((acc, products) => products.price + acc, 0);
 
+    const productIds = cartItems?.map(product => product?._id);
+    console.log(productIds);
+
     return <div className="min-h-screen container mx-auto px-5 ">
 
         {
@@ -58,7 +61,7 @@ const Cart = () => {
 
 
                     <div className=" w-2/5 mx-auto mt-20">
-                        <button onClick={() => navigate("/deliveryAddress", { state: { products: cartItems, totalPrice: subtotal } })} className="bg-[#444852] w-full text-white rounded-lg btn hover:text-black  py-3">Next</button>
+                        <button onClick={() => navigate("/deliveryAddress", { state: { products: cartItems, totalPrice: subtotal, productIds } })} className="bg-[#444852] w-full text-white rounded-lg btn hover:text-black  py-3">Next</button>
                     </div>
 
 

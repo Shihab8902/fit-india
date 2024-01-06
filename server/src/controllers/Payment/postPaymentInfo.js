@@ -15,13 +15,17 @@ const postPaymentInfo = async (req, res, next) => {
     try {
         const paymentInfo = req.body;
 
+
+
         const uid = new mongoose.Types.ObjectId().toString();
+
+
 
         const data = {
             total_amount: paymentInfo?.subtotal,
             currency: 'USD',
             tran_id: uid, // use unique tran_id for each api call
-            success_url: `http://localhost:9000/success/${uid}`,
+            success_url: `http://localhost:9000/success/${uid}?id=${paymentInfo?.productIds}`,
             fail_url: 'http://localhost:3030/fail',
             cancel_url: 'http://localhost:3030/cancel',
             ipn_url: 'http://localhost:3030/ipn',

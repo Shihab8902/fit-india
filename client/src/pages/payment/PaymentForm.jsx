@@ -6,8 +6,9 @@ const PaymentForm = () => {
 
     const location = useLocation();
     const deliveryInfo = location.state;
-    console.log(deliveryInfo);
     const productPrice = deliveryInfo?.totalPrice;
+
+    console.log(deliveryInfo);
 
     const shippingFee = productPrice * 0.05;
 
@@ -24,7 +25,8 @@ const PaymentForm = () => {
             city: deliveryInfo?.selectedAddress?.city,
             country: deliveryInfo?.selectedAddress?.country,
             email: deliveryInfo?.selectedAddress?.email,
-            subtotal: productPrice
+            subtotal: productPrice,
+            productIds: deliveryInfo?.productIds
         }
 
 
