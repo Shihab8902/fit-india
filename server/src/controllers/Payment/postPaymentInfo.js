@@ -26,8 +26,8 @@ const postPaymentInfo = async (req, res, next) => {
             currency: 'USD',
             tran_id: uid, // use unique tran_id for each api call
             success_url: `http://localhost:9000/success/${uid}?id=${paymentInfo?.productIds}`,
-            fail_url: 'http://localhost:3030/fail',
-            cancel_url: 'http://localhost:3030/cancel',
+            fail_url: 'http://localhost:9000/fail',
+            cancel_url: 'http://localhost:9000/cancel',
             ipn_url: 'http://localhost:3030/ipn',
             cus_name: paymentInfo?.name,
             cus_email: paymentInfo?.email,

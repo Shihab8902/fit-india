@@ -22,6 +22,8 @@ import PrivateRoute from "../components/Private Route/PrivateRoute";
 import EditAddress from "../pages/add-delivery-address/EditAddress";
 import PaymentForm from "../pages/payment/PaymentForm";
 import PaymentSuccess from "../pages/payment/PaymentSuccess";
+import PaymentCancel from "../pages/payment/PaymentCancel";
+import PaymentFailed from "../pages/payment/PaymentFailed";
 
 export const router = createBrowserRouter([
     {
@@ -87,6 +89,14 @@ export const router = createBrowserRouter([
                 path: "/success/:id",
                 element: <PaymentSuccess />
 
+            },
+            {
+                path: "/cancel",
+                element: <PaymentCancel />
+            },
+            {
+                path: "/fail",
+                element: <PaymentFailed />
             }
         ]
     },
