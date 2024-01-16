@@ -16,29 +16,11 @@ app.use(express.json());
 
 //Routes
 const productRoutes = require('./src/routes/productRoutes');
-const userRoutes = require("./src/routes/userRoutes");
-
-
-
 
 
 
 //Routes use
 app.use(productRoutes);
-app.use(userRoutes);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -46,7 +28,6 @@ app.use(userRoutes);
 app.get("/", (req, res) => {
     res.send({ message: "The server is up and running...." });
 });
-
 
 
 //Handle server errors
