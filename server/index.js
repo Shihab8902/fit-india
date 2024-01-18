@@ -21,6 +21,7 @@ const authenticationRoutes = require("./src/routes/authentication");
 const cartRoutes = require("./src/routes/cartRoutes");
 const addressRoutes = require("./src/routes/addressRoutes");
 const paymentRoutes = require("./src/routes/paymentRoutes");
+const orderRoutes = require("./src/routes/orderRoutes");
 
 
 
@@ -32,6 +33,7 @@ app.use(authenticationRoutes);
 app.use(cartRoutes);
 app.use(addressRoutes);
 app.use(paymentRoutes);
+app.use(orderRoutes);
 
 
 

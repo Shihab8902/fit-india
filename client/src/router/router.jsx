@@ -24,6 +24,8 @@ import PaymentForm from "../pages/payment/PaymentForm";
 import PaymentSuccess from "../pages/payment/PaymentSuccess";
 import PaymentCancel from "../pages/payment/PaymentCancel";
 import PaymentFailed from "../pages/payment/PaymentFailed";
+import DeliveryStatus from "../pages/delivery status/DeliveryStatus";
+import OrderManage from "../pages/delivery status/OrderManage";
 
 export const router = createBrowserRouter([
     {
@@ -97,6 +99,18 @@ export const router = createBrowserRouter([
             {
                 path: "/fail",
                 element: <PaymentFailed />
+            },
+            {
+                path: "/orders",
+                element: <PrivateRoute>
+                    <DeliveryStatus />
+                </PrivateRoute>
+            },
+            {
+                path: "/order/:id",
+                element: <PrivateRoute>
+                    <OrderManage />
+                </PrivateRoute>
             }
         ]
     },
